@@ -5,7 +5,7 @@ using UnityEngine;
 public class Shooter : MonoBehaviour
 {
     public GameObject bullet;
-    public float power = 1500f;
+    public float power = 100f;
 
     // Update is called once per frame
     void Update()
