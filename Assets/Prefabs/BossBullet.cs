@@ -28,10 +28,8 @@ public class BossBullet : MonoBehaviour
 		{
 			if (hit.collider)
 			{
-				// create explosion and destroy bullet
+				//destroy bullet
 				transform.position = hit.point;
-				//if (Explosion)
-				//	Instantiate(Explosion, hit.point, Quaternion.identity);
 				Destroy(gameObject);
 
 				// apply damage to object

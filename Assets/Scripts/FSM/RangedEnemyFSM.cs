@@ -6,7 +6,7 @@ public class RangedEnemyFSM : MonoBehaviour
 {
     //public GameObject Enemy;
     public GameObject[] waypointList;
-    protected Vector3 destPos; // Next destination position of the NPC Tank
+    protected Vector3 destPos; // Next destination position of the NPC
     private UnityEngine.AI.NavMeshAgent nav;
     public enum FSMState
     {
@@ -85,7 +85,6 @@ public class RangedEnemyFSM : MonoBehaviour
     protected void UpdateChaseState()
     {
         destPos = playerTransform.position;
-        //nav.SetDestination(destPos);
 
         // Rotate to the target point
         Quaternion targetRotation = Quaternion.LookRotation(destPos - transform.position);
@@ -112,7 +111,6 @@ public class RangedEnemyFSM : MonoBehaviour
     protected void UpdateAttackState() 
     {
         destPos = playerTransform.position;
-        //nav.SetDestination(destPos);
 
         if (elapsedTime >= shootRate)
 		{
@@ -131,18 +129,6 @@ public class RangedEnemyFSM : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(destPos - transform.position);
         GetComponent<Rigidbody>().MoveRotation(Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotSpeed));
 
-        //keep enemy targeted to player
-        /*if (Enemy){
-            Quaternion targetRotation = Quaternion.LookRotation(destPos - transform.position);
-            GetComponent<Rigidbody>().MoveRotation(Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotSpeed));
-        }*/
-
-        /* Go Forward if more than 10 units
-        if (Vector3.Distance(transform.position, playerTransform.position) > 10.0f)
-        {
-            GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position + transform.forward * Time.deltaTime * moveSpeed);
-        }*/
-
         //Go to Chase State if further than 20 units of player
         if (Vector3.Distance(transform.position, playerTransform.position) > attackRange)
         {
@@ -157,7 +143,6 @@ public class RangedEnemyFSM : MonoBehaviour
     protected void UpdatePatrolState()
     {
         // Find another random patrol point if the current point is reached
-        //nav.SetDestination(destPos);
         if (Vector3.Distance(transform.position, destPos) <= 5.0f)
         {
             FindNextPoint();
@@ -183,7 +168,7 @@ public class RangedEnemyFSM : MonoBehaviour
      */
     protected void UpdateDeadState()
     {
-        // Show the dead animation with some physics effects
+        // Destroys object and updates score
         if (!bDead)
         {
             bDead = true;

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class playerScript : MonoBehaviour
 {
+    //used for keycard and door mechanics
     public bool keycard = false;
     public bool nearDoor = false;
     public bool nearKeycard = false;
@@ -20,6 +21,7 @@ public class playerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //if health reaches 0, destroy object and load death screen
         if(health <= 0){
 			Death();
             LoadLevel("DeathScreen");
@@ -111,6 +113,7 @@ public class playerScript : MonoBehaviour
         healthbar.rectTransform.sizeDelta = new Vector2(healthbar.rectTransform.rect.width - damage * (float)2.5, healthbar.rectTransform.rect.height);
 	}
 
+    //updates the GUI to reflect score
     public void UpdateScore(int addScore) {
 		score = score + addScore;
 		// update the GUI score here
@@ -118,10 +121,12 @@ public class playerScript : MonoBehaviour
 
 	}
 
+    //destroys object
     void Death(){
         Destroy(gameObject, 1f);
     }
 
+    //loads death screen
     public void LoadLevel (string levelName) {
         SceneManager.LoadScene(levelName);
     }

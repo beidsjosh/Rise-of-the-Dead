@@ -4,6 +4,7 @@ using System.Collections;
 public class BossDefaultDamage : MonoBehaviour
 {
 
+    //damage the enemy can give out
     public int damage = 20;
 
     public bool isTouching = false;
@@ -22,24 +23,21 @@ public class BossDefaultDamage : MonoBehaviour
     
     void OnCollisionEnter(Collision other)
     {
-        //Debug.Log("Triggered");
         // other object is close
         if (Vector3.Distance(other.transform.position, this.transform.position) < maxDistance)
         {
             isTouching = true; // they are touching AND close
-            //Debug.Log(isTouching);
             GameObject obj = other.gameObject;
 				if (obj.tag == "Player")
 				{
-                    //Debug.Log("Im hitting the player");
-					playerScript tank = (playerScript) obj.GetComponent(typeof(playerScript));
-					tank.ApplyDamage(damage);
+                    //apply damage to player
+					playerScript player = (playerScript) obj.GetComponent(typeof(playerScript));
+					player.ApplyDamage(damage);
 
 				}
         }
         else {
             isTouching = false;
-            //Debug.Log(isTouching);
         }
     }
 

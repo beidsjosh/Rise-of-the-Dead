@@ -5,7 +5,7 @@ using UnityEngine;
 public class BossRangedFSM : MonoBehaviour
 {
     public GameObject[] waypointList;
-    protected Vector3 destPos; // Next destination position of the NPC Tank
+    protected Vector3 destPos; // Next destination position of the NPC
     private UnityEngine.AI.NavMeshAgent nav;
     public enum FSMState
     {
@@ -171,7 +171,7 @@ public class BossRangedFSM : MonoBehaviour
      */
     protected void UpdateDeadState()
     {
-        // Show the dead animation with some physics effects
+        // Destorys object and updates score
         if (!bDead)
         {
             bDead = true;

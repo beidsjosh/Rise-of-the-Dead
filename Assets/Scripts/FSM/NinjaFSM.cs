@@ -5,7 +5,7 @@ using UnityEngine;
 public class NinjaFSM : MonoBehaviour
 {
     public GameObject[] waypointList;
-    protected Vector3 destPos; // Next destination position of the NPC Tank
+    protected Vector3 destPos; // Next destination position of the NPC
     private UnityEngine.AI.NavMeshAgent nav;
     public enum FSMState
     {
@@ -25,9 +25,6 @@ public class NinjaFSM : MonoBehaviour
     public float moveMultiply = 18.0f; //faster moveSpeed for attack
     public float rotSpeed = 20.0f; // Enemy Rotation Speed
 
-     // Bullet
-	//public GameObject bullet;
-	//public GameObject bulletSpawnPoint;
 	// Bullet shooting rate
 	public float shootRate = 3.0f;
 	protected float elapsedTime;
@@ -116,10 +113,6 @@ public class NinjaFSM : MonoBehaviour
             Debug.Log("working :)");
 			//Reset the time
 			elapsedTime = 0.0f;
-
-			//Also Instantiate over the PhotonNetwork
-			//if ((bulletSpawnPoint) & (bullet))
-			//	Instantiate(bullet, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
 		}
         // Update the time
 		elapsedTime += Time.deltaTime;
@@ -129,12 +122,6 @@ public class NinjaFSM : MonoBehaviour
         GetComponent<Rigidbody>().MoveRotation(Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotSpeed));
 
         GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position + transform.forward * Time.deltaTime * moveMultiply);
-
-        // Go Forward if more than 10 units
-        /*if (Vector3.Distance(transform.position, playerTransform.position) > 0.0f)
-        {
-            GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position + transform.forward * Time.deltaTime * moveMultiply);
-        }*/
 
         //Go to Chase State if further than 20 units of player
         if (Vector3.Distance(transform.position, playerTransform.position) > attackRange)
@@ -149,7 +136,6 @@ public class NinjaFSM : MonoBehaviour
      */
     protected void UpdatePatrolState()
     {
-        //nav.SetDestination(destPos);
         // Find another random patrol point if the current point is reached
         if (Vector3.Distance(transform.position, destPos) <= 5.0f)
         {
@@ -176,7 +162,7 @@ public class NinjaFSM : MonoBehaviour
      */
     protected void UpdateDeadState()
     {
-        // Show the dead animation with some physics effects
+        // Destroys object and updates score
         if (!bDead)
         {
             bDead = true;

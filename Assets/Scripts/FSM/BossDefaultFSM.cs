@@ -5,7 +5,7 @@ using UnityEngine;
 public class BossDefaultFSM : MonoBehaviour
 {
     public GameObject[] waypointList;
-    protected Vector3 destPos; // Next destination position of the NPC Tank
+    protected Vector3 destPos; // Next destination position of the NPC
     private UnityEngine.AI.NavMeshAgent nav;
     public enum FSMState
     {
@@ -25,10 +25,7 @@ public class BossDefaultFSM : MonoBehaviour
     public float moveMultiply = 9.0f; //faster moveSpeed for attack
     public float rotSpeed = 20.0f; // Enemy Rotation Speed
 
-     // Bullet
-	//public GameObject bullet;
-	//public GameObject bulletSpawnPoint;
-	// Bullet shooting rate
+	// Attack shooting rate
 	public float shootRate = 1.5f;
 	protected float elapsedTime;
 
@@ -41,6 +38,7 @@ public class BossDefaultFSM : MonoBehaviour
 	public float attackRange = 5.0f;
 	public float attackRangeStop = 0.0f;
 
+    //damage the enemy can give out
     public int damage = 50;
 
     private Vector3 newPos;
@@ -100,14 +98,12 @@ public class BossDefaultFSM : MonoBehaviour
         //Go to Patrol State if further than 35 units of player
         if (Vector3.Distance(transform.position, playerTransform.position) > chaseRange)
         {
-            //Debug.Log("player is far away");
             curState = FSMState.Patrol;
         }
 
         //Go to Attack State if within than 20 units of player
         if (Vector3.Distance(transform.position, playerTransform.position) < attackRange)
         {
-            //Debug.Log("player is far away");
             curState = FSMState.Attack;
         }
     }
@@ -116,14 +112,10 @@ public class BossDefaultFSM : MonoBehaviour
     {
         if (elapsedTime >= shootRate)
 		{
-            Debug.Log("working :)");
 			//Reset the time
 			elapsedTime = 0.0f;
-
-			//Also Instantiate over the PhotonNetwork
-			//if ((bulletSpawnPoint) & (bullet))
-			//	Instantiate(bullet, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
 		}
+
         // Update the time
 		elapsedTime += Time.deltaTime;
 
@@ -140,7 +132,6 @@ public class BossDefaultFSM : MonoBehaviour
         //Go to Chase State if further than 20 units of player
         if (Vector3.Distance(transform.position, playerTransform.position) > attackRange)
         {
-            //Debug.Log("player is far away");
             curState = FSMState.Chase;
         }
     }
@@ -166,7 +157,6 @@ public class BossDefaultFSM : MonoBehaviour
         // Go to chase state if within 35 units of player
         if (Vector3.Distance(transform.position, playerTransform.position) <= chaseRange)
         {
-            //Debug.Log("player is close");
             curState = FSMState.Chase;
         } 
     }
@@ -176,7 +166,7 @@ public class BossDefaultFSM : MonoBehaviour
      */
     protected void UpdateDeadState()
     {
-        // Show the dead animation with some physics effects
+        // Destorys the enemy and updates score
         if (!bDead)
         {
             bDead = true;
@@ -190,7 +180,6 @@ public class BossDefaultFSM : MonoBehaviour
     {
         int rndIndex = Random.Range(0, waypointList.Length);
         destPos = waypointList[rndIndex].transform.position;
-        //Debug.Log(destPos);
     }
 
 
@@ -199,7 +188,6 @@ public class BossDefaultFSM : MonoBehaviour
     public void ApplyDamage(int dmg)
     {
         health -= dmg;
-        Debug.Log("hit enemy");
     }
 
     void OnDrawGizmos() {

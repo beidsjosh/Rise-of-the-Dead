@@ -6,14 +6,10 @@ public class Shooter : MonoBehaviour
 {
     public GameObject bullet;
     public float power = 1500f;
-    // public float moveSpeed = 2f;
 
     // Update is called once per frame
     void Update()
     {
-        // float h = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeed; 
-        // float v = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeed;
-        // transform.Translate(h,v,0);
 
         if (Input.GetButtonUp("Fire1")) 
         { 
@@ -24,4 +20,3 @@ public class Shooter : MonoBehaviour
         }
     }
 }
-// When looking down no longer shoots from middle of screen
