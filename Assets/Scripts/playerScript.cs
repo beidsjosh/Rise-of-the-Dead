@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class playerScript : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class playerScript : MonoBehaviour
     public int health = 100;
     public Image healthbar;
     public Text scoreText;
-    private int score = 0;
+    public int score = 0;
     
 
     // Update is called once per frame
@@ -21,6 +22,7 @@ public class playerScript : MonoBehaviour
     {
         if(health <= 0){
 			Death();
+            LoadLevel("DeathScreen");
 		}
         // Debug.Log("Near door: " + nearDoor);
         // Debug.Log("keycard: " + keycard);
@@ -47,8 +49,8 @@ public class playerScript : MonoBehaviour
             nearKeycard = false;
             keycard = true;
         }
+        }
     }
-}
 
     void OnGUI() 
     {
@@ -118,6 +120,10 @@ public class playerScript : MonoBehaviour
 
     void Death(){
         Destroy(gameObject, 1f);
+    }
+
+    public void LoadLevel (string levelName) {
+        SceneManager.LoadScene(levelName);
     }
 
 }
