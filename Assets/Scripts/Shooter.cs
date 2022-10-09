@@ -16,7 +16,8 @@ public class Shooter : MonoBehaviour
             GameObject instance = Instantiate (bullet, transform.position,
             transform.rotation) as GameObject; 
             Vector3 fwd = transform.TransformDirection (Vector3.forward); 
-            instance.GetComponent<Rigidbody>().AddForce (fwd * power); 
+            instance.GetComponent<Rigidbody>().AddForce (fwd * power);
+            GetComponent<AudioSource>().Play(); 
         }
     }
 }
